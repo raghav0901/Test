@@ -16,6 +16,8 @@ server = Flask(__name__)
 cache = Cache(server, config={'CACHE_TYPE': 'simple'})
 app = Dash(__name__, server=server, external_stylesheets=[dbc.themes.BOOTSTRAP])
 activate_mito(app)  # Must be called before layout using Spreadsheet
+
+server=app.server
  
 # -----------------------------------------------------------------------------
 # Load full DataFrame once at startup and store in cache
@@ -224,4 +226,5 @@ if __name__ == '__main__':
     app.run(debug=True,dev_tools_ui=False,
         dev_tools_props_check=False,port=8000,host='20.48.202.162')
  
+
  
