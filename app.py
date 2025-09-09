@@ -222,7 +222,8 @@ def on_execute(n_clicks, selected_carrier, selected_app, selected_stat):
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True,dev_tools_ui=False,
-        dev_tools_props_check=False,port=8000,host='0.0.0.0')
+        dev_tools_props_check=False,port=8000)
  
 
  
+
