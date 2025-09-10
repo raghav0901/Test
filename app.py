@@ -34,138 +34,11 @@ azure_connection_string = f"mssql+pyodbc:///?odbc_connect={params}"
 azure_engine = create_engine(azure_connection_string)
  
 try:
-    full_df = pd.read_sql("SET NOCOUNT ON; EXEC Census_Eng", azure_engine.raw_connection())
-    full_df['BirthDate'] = pd.to_datetime(full_df['BirthDate'], format='%Y-%m-%d')
+    print("sql connecting")
 except Exception as e:
     print("Warning: could not load from DB, using sample data. Error:", e)
-    full_df = pd.DataFrame({
-        'PlanSponsor': ['X', 'Y', 'X', 'Z'],
-        'Carrier': ['A', 'A', 'B', 'B'],
-        'Value': [10, 20, 30, 40],
-        # If you refer to 'MemberStatus' or others in filters, ensure columns exist in sample:
-        'MemberStatus': ['Active', 'Inactive', 'Active', 'Inactive']
-    })
  
-# Ensure unique ID column exists for merging edits
-if 'ID' not in full_df.columns:
-    full_df = full_df.reset_index(drop=False).rename(columns={'index': 'ID'})
-# Store initial DataFrame in cache
-cache.set('master_df', full_df)
- 
-# -----------------------------------------------------------------------------
-# Build dropdown options from cached DataFrame
-# -----------------------------------------------------------------------------
-df0 = cache.get('master_df')
-carrier_options = [{'label': x, 'value': x} for x in sorted(df0['Carrier'].dropna().unique())]
-app_options = [{'label': x, 'value': x} for x in sorted(df0['PlanSponsor'].dropna().unique())]
-stat_options = [{'label': x, 'value': x} for x in sorted(df0['MemberStatus'].dropna().unique())]
- 
-# -----------------------------------------------------------------------------
-# Globals for Spreadsheet IDs
-# -----------------------------------------------------------------------------
-sheet_counter = 0  # will increment each time Execute is clicked, to give new id
- 
-# -----------------------------------------------------------------------------
-# Layout: dropdowns, Execute button, and placeholder Div for Spreadsheet
-# -----------------------------------------------------------------------------
-app.layout = dbc.Container([
-    # Filter dropdowns
-    dbc.Row([
-        dbc.Col(
-            dcc.Dropdown(
-                id='Carrier-dropdown',
-                options=carrier_options,
-                placeholder="Select Carrier",
-                clearable=True
-            ),
-            md=4
-        ),
-        dbc.Col(
-            dcc.Dropdown(
-                id='application-dropdown',
-                options=app_options,
-                placeholder="Select Application",
-                clearable=True
-            ),
-            md=4
-        ),
-        dbc.Col(
-            dcc.Dropdown(
-                id='Status-dropdown',
-                options=stat_options,
-                placeholder="Select Status",
-                clearable=True
-            ),
-            md=4
-        )
-    ], className="mb-4"),
- 
-    # Execute button row
-    dbc.Row([
-        dbc.Col(
-            dbc.Button("Execute", id='execute-button', color='primary', n_clicks=0),
-            width='auto'
-        ),
-    ], className="mb-4"),
- 
-    # Placeholder for the Spreadsheet; initially empty
-    dbc.Row(
-        dbc.Col(
-            html.Div(id='sheet-wrapper'),
-            width=12
-        ),
-        className="mb-4"
-    ),
- 
-    # Dummy output for mito_callback (if you choose to hook edits)
-    html.Div(id='dummy-output', style={'display': 'none'})
-], fluid=True, className="p-4")
- 
-# -----------------------------------------------------------------------------
-# Callback: triggered only by Execute button click. Filters are States.
-# -----------------------------------------------------------------------------
-@app.callback(
-    Output('sheet-wrapper', 'children'),
-    Input('execute-button', 'n_clicks'),
-    State('Carrier-dropdown', 'value'),
-    State('application-dropdown', 'value'),
-    State('Status-dropdown', 'value'),
-    prevent_initial_call=False  # we handle n_clicks==0 inside
-)
-def on_execute(n_clicks, selected_carrier, selected_app, selected_stat):
-    """
-    When Execute button is clicked (n_clicks>=1), fetch the master DataFrame from cache, apply filters,
-    and return a new Spreadsheet with the filtered data. On initial load (n_clicks is None or 0),
-    return an empty Div or placeholder.
-    """
-    global sheet_counter
- 
-    # If button has never been clicked (n_clicks is None or 0), do not render the Spreadsheet
-    if not n_clicks:
-        # Optionally, you can return a message like:
-        # return html.Div("Click 'Execute' to load data.")
-        return html.Div()  # empty
- 
-    # Button has been clicked at least once: apply filters
-    df_master = cache.get('master_df')
-    if df_master is None:
-        df_master = full_df.copy()
-        cache.set('master_df', df_master)
- 
-    dff = df_master.copy()
-    if selected_carrier:
-        dff = dff[dff['Carrier'] == selected_carrier]
-    if selected_app:
-        dff = dff[dff['PlanSponsor'] == selected_app]
-    if selected_stat:
-        dff = dff[dff['MemberStatus'] == selected_stat]
- 
-    # Increment sheet_counter to give a fresh id each time
-    sheet_counter += 1
-    sheet_id = {'type': 'spreadsheet', 'id': sheet_counter}
-    # Create and return the Spreadsheet component
-    spread = Spreadsheet(dff, id=sheet_id)
-    return spread
+
 
 @server.route("/hello")
 def hello():
@@ -227,6 +100,7 @@ if __name__ == '__main__':
     app.server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
 
 
 
