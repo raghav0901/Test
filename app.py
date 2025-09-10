@@ -34,7 +34,7 @@ conn_str = (
     "UID=raghav.kapoor;"
     "PWD=K1zuXa1B82VESMe0xDq4i71AybBhjawrzUSx/xkiVPQ=;"
     "Encrypt=yes;"
-    "TrustServerCertificate=no;"
+    "TrustServerCertificate=yes;"
 )
 params = urllib.parse.quote_plus(conn_str)
 azure_connection_string = f"mssql+pyodbc:///?odbc_connect={params}"
@@ -217,6 +217,7 @@ if __name__ == '__main__':
  
 
  
+
 
 
 
