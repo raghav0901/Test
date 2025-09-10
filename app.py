@@ -28,9 +28,9 @@ except Exception as e:
  
 
 
-@server.route("/hello")
-def hello():
-    return "Hello, Flask + Dash is running!"
+#@server.route("/hello")
+#def hello():
+#    return "Hello, Flask + Dash is running!"
 # -----------------------------------------------------------------------------
 # mito_callback: capture edits and merge into cache
 # (Uncomment and adjust if you want to persist edits back to master_df)
@@ -88,6 +88,7 @@ if __name__ == '__main__':
     app.server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
 
 
 
