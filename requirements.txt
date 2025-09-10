@@ -1,8 +1,8 @@
-dash==3.2.0                # latest as of Jul 31 2025 :contentReference[oaicite:0]{index=0}
-pandas==2.3.2              # latest as of Aug 21 2025 :contentReference[oaicite:1]{index=1}
-Flask==3.1.2               # latest as of Aug 19 2025 :contentReference[oaicite:2]{index=2}
+dash==3.0.4                # latest as of Jul 31 2025 :contentReference[oaicite:0]{index=0}
+pandas==2.2.3              # latest as of Aug 21 2025 :contentReference[oaicite:1]{index=1}
+Flask==3.0.3               # latest as of Aug 19 2025 :contentReference[oaicite:2]{index=2}
 Flask-Caching==2.3.1       # latest as of Feb 23 2025 :contentReference[oaicite:3]{index=3}
-SQLAlchemy==2.0.43         # latest as of Aug 11 2025 :contentReference[oaicite:4]{index=4}
-dash-bootstrap-components==2.0.4  # latest as of Aug 20 2025 :contentReference[oaicite:5]{index=5}
-mitosheet==0.2.43          # latest as of Sep 5 2025 :contentReference[oaicite:6]{index=6}
+SQLAlchemy==2.0.41         # latest as of Aug 11 2025 :contentReference[oaicite:4]{index=4}
+dash-bootstrap-components==2.0.3  # latest as of Aug 20 2025 :contentReference[oaicite:5]{index=5}
+mitosheet==0.2.25         # latest as of Sep 5 2025 :contentReference[oaicite:6]{index=6}
 uvicorn==0.30.6
