@@ -6,3 +6,4 @@ SQLAlchemy==2.0.41         # latest as of Aug 11 2025 :contentReference[oaicite:
 dash-bootstrap-components==2.0.3  # latest as of Aug 20 2025 :contentReference[oaicite:5]{index=5}
 mitosheet==0.2.25         # latest as of Sep 5 2025 :contentReference[oaicite:6]{index=6}
 gunicorn
+pyodbc
