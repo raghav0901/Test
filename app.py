@@ -12,10 +12,12 @@ from dash.dependencies import ALL
 # -----------------------------------------------------------------------------
 # Initialize Flask + Dash app, activate Mito
 # -----------------------------------------------------------------------------
-server = Flask(__name__)
-cache = Cache(server, config={'CACHE_TYPE': 'simple'})
-app = Dash(__name__, server=server, external_stylesheets=[dbc.themes.BOOTSTRAP])
+serverr = Flask(__name__)
+cache = Cache(serverr, config={'CACHE_TYPE': 'simple'})
+app = Dash(__name__, server=serverr, external_stylesheets=[dbc.themes.BOOTSTRAP])
 activate_mito(app)  # Must be called before layout using Spreadsheet
+
+server=app.server
  
 # -----------------------------------------------------------------------------
 # Load full DataFrame once at startup and store in cache
@@ -226,5 +228,6 @@ def on_execute(n_clicks, selected_carrier, selected_app, selected_stat):
 # Run server
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
-    app.server.run(debug=True,port=8000,host='0.0.0.0')
+    server.run(debug=True,port=8000,host='0.0.0.0')
+
  
