@@ -22,16 +22,24 @@ server=app.server
 # -----------------------------------------------------------------------------
 # Load full DataFrame once at startup and store in cache
 # -----------------------------------------------------------------------------
+conn_str = (
+    "DRIVER={ODBC Driver 17 for SQL Server};"
+    "SERVER=sacafpedvdba01.database.windows.net;"
+    "DATABASE=sebfpeqc;"
+    "UID=raghav.kapoor;"
+    "PWD=K1zuXa1B82VESMe0xDq4i71AybBhjawrzUSx/xkiVPQ=;"
+    "Encrypt=yes;"
+    "TrustServerCertificate=yes;"
+)
+params = urllib.parse.quote_plus(conn_str)
+azure_connection_string = f"mssql+pyodbc:///?odbc_connect={params}"
+azure_engine = create_engine(azure_connection_string)
 
- 
+
 try:
-    full_df = pd.DataFrame({
-        'PlanSponsor': ['X', 'Y', 'X', 'Z'],
-        'Carrier': ['A', 'A', 'B', 'B'],
-        'Value': [10, 20, 30, 40],
-        # If you refer to 'MemberStatus' or others in filters, ensure columns exist in sample:
-        'MemberStatus': ['Active', 'Inactive', 'Active', 'Inactive']
-    })
+    full_df = pd.read_sql("SET NOCOUNT ON; EXEC Census_Eng", azure_engine.raw_connection())
+    if 'BirthDate' in full_df.columns:
+        full_df['BirthDate'] = pd.to_datetime(full_df['BirthDate'], format='%Y-%m-%d', errors='coerce')
 except Exception as e:
     print("Warning: could not load from DB, using sample data. Error:", e)
     full_df = pd.DataFrame({
@@ -220,4 +228,5 @@ if __name__ == '__main__':
     server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
 
