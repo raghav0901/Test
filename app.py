@@ -22,18 +22,7 @@ server=app.server
 # -----------------------------------------------------------------------------
 # Load full DataFrame once at startup and store in cache
 # -----------------------------------------------------------------------------
-conn_str = (
-    "DRIVER={ODBC Driver 17 for SQL Server};"
-"SERVER=sacafpedvdba01.database.windows.net;"
-    "DATABASE=sebfpeqc;"
-    "UID=raghav.kapoor;"
-    "PWD=K1zuXa1B82VESMe0xDq4i71AybBhjawrzUSx/xkiVPQ=;"
-    "Encrypt=yes;"
-    "TrustServerCertificate=yes;"
-)
-params = urllib.parse.quote_plus(conn_str)
-azure_connection_string = f"mssql+pyodbc:///?odbc_connect={params}"
-azure_engine = create_engine(azure_connection_string)
+
  
 try:
     full_df = pd.DataFrame({
@@ -231,3 +220,4 @@ if __name__ == '__main__':
     server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
