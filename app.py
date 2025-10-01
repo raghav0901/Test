@@ -14,7 +14,8 @@ from dash.dependencies import ALL
 # -----------------------------------------------------------------------------
 serverr = Flask(__name__)
 cache = Cache(serverr, config={'CACHE_TYPE': 'simple'})
-app = Dash(__name__, server=serverr, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, server=serverr, external_stylesheets=[dbc.themes.BOOTSTRAP],routes_pathname_prefix='/dash/',
+    requests_pathname_prefix='/dash/')
 activate_mito(app)  # Must be called before layout using Spreadsheet
 
 server=app.server
@@ -228,5 +229,6 @@ if __name__ == '__main__':
     server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
 
 
