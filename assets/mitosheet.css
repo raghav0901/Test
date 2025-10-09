@@ -1,0 +1,18 @@
+
+/* Hide the MitoSheet toolbar */
+.mito-toolbar-container {
+  display: none !important;
+}
+
+/* Hide the MitoSheet toolbar */
+.spacing-row.spacing-row-top-bottom-margin:first-of-type {
+  display: none !important;
+}
+
+/* Hide the MitoSheet toolbar */
+.footer-add-button.cursor-pointer {
+  display: none !important;
+}
+
+
+
