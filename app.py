@@ -8,13 +8,13 @@ from sqlalchemy import create_engine
 import dash_bootstrap_components as dbc
 from mitosheet.mito_dash.v1 import Spreadsheet, activate_mito, mito_callback
 from dash.dependencies import ALL
-#from flask_cors import CORS
+from flask_cors import CORS
  
 # -----------------------------------------------------------------------------
 # Initialize Flask + Dash app, activate Mito
 # -----------------------------------------------------------------------------
 serverr = Flask(__name__)
-#CORS(serverr)
+CORS(serverr)
 cache = Cache(serverr, config={'CACHE_TYPE': 'simple'})
 app = Dash(__name__, server=serverr, external_stylesheets=[dbc.themes.BOOTSTRAP],routes_pathname_prefix='/dash/',
     requests_pathname_prefix='/dash/')
@@ -242,6 +242,7 @@ if __name__ == '__main__':
     server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
 
 
 
