@@ -19,7 +19,18 @@ app = Dash(__name__, server=serverr, external_stylesheets=[dbc.themes.BOOTSTRAP]
 activate_mito(app)  # Must be called before layout using Spreadsheet
 
 server=app.server
- 
+
+
+guid = None
+@serverr.route('/incoming', methods=['POST'])
+def api_filter():
+    payload = request.get_json() or {}
+    global guid
+    guid = payload.get('guid')
+    print(f"Received filter request with guid: {guid}")
+    return jsonify({'status': 'ok'}), 200
+
+
 # -----------------------------------------------------------------------------
 # Load full DataFrame once at startup and store in cache
 # -----------------------------------------------------------------------------
@@ -229,6 +240,7 @@ if __name__ == '__main__':
     server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
 
 
 
