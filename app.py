@@ -2,7 +2,7 @@ import dash
 from dash import Dash, dcc, html, Input, Output, State
 import pandas as pd
 import urllib.parse
-from flask import Flask,request,jsonify
+from flask import Flask, request, jsonify
 from flask_caching import Cache
 from sqlalchemy import create_engine
 import dash_bootstrap_components as dbc
@@ -242,6 +242,7 @@ if __name__ == '__main__':
     server.run(debug=True,port=8000,host='0.0.0.0')
 
  
+
 
 
 
